@@ -28,27 +28,36 @@ export const citySlice = createSlice({
     setNewLocation: (state, action) => {
       state.params = action.payload;
     },
-    getNewLocation: (state, action) => {
-      const searchBy = action.payload;
-      let res = [];
+    setNewWeather: (state, action) => {
+      state.weather = action.payload;
+    },
+  },
+})
+
+export const getCurrentLocationAutomaticAsync = () => async (dispatch) => {
+  let cityName = "";
+  let cityData = [];
+  if ("geolocation" in navigator) {
+    await navigator.geolocation.getCurrentPosition(async (position) => {
+      const location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      }
       try {
-        res = axios.get(`https://geocoding-api.open-meteo.com/v1/search?name=${searchBy}`);
-        state.params = res.data.results || {};
+        const cityNameSearchResult = await axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.latitude}&longitude=${location.longitude}&localityLanguage=en`);
+        cityName = cityNameSearchResult.data.city;
+        const cityDataSearchResult = await axios.get(`https://geocoding-api.open-meteo.com/v1/search?name=${cityName}`);
+        cityData = [cityDataSearchResult.data.results[0]];
+        dispatch(setNewLocation(cityData));
+        dispatch(getNewWeatherAsync(location));
       } catch (error) {
         console.log(`Location call error: ${error}`);
       }
-    },
-    getWeather: async (state, action) => {
-      const latitude = action.payload.latitude;
-      const longitude = action.payload.longitude;
-      try {
-        state.weather = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`);
-      } catch (error) {
-        console.log(`Weather call error: ${error}`);
-      }
-    }
-  },
-})
+    });
+  } else {
+    console.log("Automatic location not available");
+  }
+}
 
 export const getNewLocationAsync = (searchBy) => async (dispatch) => {
   let res = [];
@@ -60,7 +69,18 @@ export const getNewLocationAsync = (searchBy) => async (dispatch) => {
   }
 }
 
-export const { getNewLocation, getWeather, setNewLocation } = citySlice.actions;
+export const getNewWeatherAsync = (city) => async (dispatch) => {
+  let res = [];
+  try {
+    res = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&hourly=temperature_2m`);
+    dispatch(setNewWeather(res.data));
+  } catch (error) {
+    console.log(`Weather call error: ${error}`);
+  }
+}
+
+export const { setNewLocation, setNewWeather } = citySlice.actions;
 export const selectedCity = (state) => state.city.params
+export const selectedCityWeather = (state) => state.city.weather
 
 export default citySlice.reducer
