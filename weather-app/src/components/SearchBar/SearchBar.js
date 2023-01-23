@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
@@ -17,9 +16,10 @@ const SearchBar = () => {
       sx={{
         p: '2px 4px',
         display: 'flex',
+        justifyContent: "center",
         alignItems: 'center',
-        marginTop: "5px",
-        minWidth: "300px"
+        padding: "10px 0 10px 0",
+        minWidth: "300px",
       }}
     >
       <IconButton sx={{ p: '10px' }} aria-label="menu">

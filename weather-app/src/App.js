@@ -1,18 +1,21 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux'
 
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
+import { Routes, Route } from 'react-router-dom';
+import styles from './App.module.css';
 
-import { selectedCityWeather } from './store/citySlice';
+import Forecast from './components/Forecast/Forecast';
 
 function App() {
-  const city = useSelector(selectedCityWeather);
 
   return (
-    <div className="App">
+    <div className={styles["App"]}>
       <SearchBar />
-      {JSON.stringify(city)}
+      <Routes>
+        <Route path='/' element={<Forecast />} />
+        <Route path='/:cityNameUrl/:longitude/:latitude' key={window.location.pathname} element={<Forecast />} />
+      </Routes>
     </div>
   );
 }

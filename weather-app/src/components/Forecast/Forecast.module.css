@@ -1,0 +1,28 @@
+.forecast-main-container {
+  width: 80%;
+  overflow: hidden;
+  margin: auto;
+}
+.forecast-main-container .city-name {
+  padding: 2vh;
+}
+.forecast-main-container .city-name h1,
+.forecast-main-container .city-name h3 {
+  margin: 0;
+  color: rgb(38, 46, 215);
+}
+.forecast-main-container .forecast-body .forecast-period-option {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 100%;
+}
+.forecast-main-container .forecast-body .forecast-period-option button {
+  font-size: 0.7em;
+  width: 33.3%;
+  height: 5em;
+}
+.forecast-main-container .forecast-body .forecast-container {
+  background-color: white;
+}

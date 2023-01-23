@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { getNewLocationAsync, selectedCity, getNewWeatherAsync, getCurrentLocationAutomaticAsync } from '../../../store/citySlice';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import api from '../../../api';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -9,16 +9,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import styles from './DropDown.module.css';
 
-const DropDown = ({ searchType }) => {
-  const city = useSelector(selectedCity);
-  const dispatch = useDispatch()
+const DropDown = () => {
+  let navigate = useNavigate();
   const [locked, setLocked] = useState(0);
-  const [searchResult, setSearchResult] = useState(city);
   const [searchValue, setSearchValue] = useState("Sofia");
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
-
 
   const handleInputChange = (event) => {
     setOptions([])
@@ -36,25 +33,46 @@ const DropDown = ({ searchType }) => {
   const searchForTown = (town) => {
     setLoading(true);
     setTimeout(async () => {
-      dispatch(getNewLocationAsync(searchValue));
-      searchResult !== null ? setOptions(searchResult.results) : setOptions([]);
-      setLoading(false);
+      try {
+        const searctResultResponse = await api.getCityDataByName(searchValue);
+        searctResultResponse !== null ? setOptions(searctResultResponse) : setOptions([]);
+        setLoading(false);
+      } catch (error) {
+        console.log(`Error on town search: ${error}`);
+      }
     }, 1000);
   }
 
-  useEffect(() => {
-    setOptions(city);
-  }, [city]);
+  const handleKeyPress = async (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      try {
+        const searctResultResponse = await api.getCityDataByName(e.target.value);
+        if (searctResultResponse) {
+          await setOptions(searctResultResponse);
+          setOpen(false);
+          redirect(searctResultResponse[0].name, searctResultResponse[0].longitude, searctResultResponse[0].latitude);
+        } else {
+          setOptions([]);
+        }
+      } catch (error) {
+        console.log(`Error on town search: ${error}`);
+      }
+    }
+  }
 
-  useEffect(() => {
-    dispatch(getCurrentLocationAutomaticAsync());
-  }, []);
+  const redirect = (cityName, longitude, latitude) => {
+    let path = `/${cityName}/${longitude}/${latitude}`;
+    navigate(path);
+  }
 
   return (
     <Autocomplete
       sx={{ width: 300 }}
       open={open}
-      onChange={(e, v) => setSearchResult(v)}
+      onKeyDown={e => {
+        handleKeyPress(e)
+      }}
       onOpen={() => {
         setOpen(true);
       }}
@@ -72,7 +90,9 @@ const DropDown = ({ searchType }) => {
           key={option.id}
         >
           <div className={styles["option"]}
-            onClick={e => { dispatch(getNewWeatherAsync(option)) }}
+            onClick={e => {
+              redirect(option.name, option.longitude, option.latitude);
+            }}
           >
             <img
               loading="lazy"
@@ -87,15 +107,15 @@ const DropDown = ({ searchType }) => {
       )}
       renderInput={(params) => (
         <TextField
+          className={styles["search-input"]}
           {...params}
-          value={"Test"}
           onChange={handleInputChange}
           label="Your city..."
           InputProps={{
             ...params.InputProps,
             endAdornment: (
               <>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? <CircularProgress color="inherit" size={15} /> : null}
               </>
             ),
           }}
