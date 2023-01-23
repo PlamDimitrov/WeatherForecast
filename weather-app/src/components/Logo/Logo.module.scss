@@ -1,0 +1,19 @@
+.logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  font-family: "Montserrat";
+  font-size: 1.2em;
+  font-weight: bolder;
+  margin: auto;
+  color: rgb(218, 237, 14);
+  text-shadow: 0px 0px 2px #000000;
+  span {
+    font-family: "Montserrat";
+    font-size: 1.4em;
+    font-weight: bold;
+    color: rgb(38 46 215);
+  }
+}

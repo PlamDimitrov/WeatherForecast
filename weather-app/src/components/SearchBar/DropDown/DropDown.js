@@ -8,8 +8,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import styles from './DropDown.module.css';
+import Logo from '../../Logo/Logo';
 
-const DropDown = () => {
+const DropDown = ({ visible, setVisible }) => {
   let navigate = useNavigate();
   const [locked, setLocked] = useState(0);
   const [searchValue, setSearchValue] = useState("Sofia");
@@ -52,6 +53,7 @@ const DropDown = () => {
           await setOptions(searctResultResponse);
           setOpen(false);
           redirect(searctResultResponse[0].name, searctResultResponse[0].longitude, searctResultResponse[0].latitude);
+          setVisible(false);
         } else {
           setOptions([]);
         }
@@ -67,61 +69,65 @@ const DropDown = () => {
   }
 
   return (
-    <Autocomplete
-      sx={{ width: 300 }}
-      open={open}
-      onKeyDown={e => {
-        handleKeyPress(e)
-      }}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      isOptionEqualToValue={(option, value) => option.id === value.id || true}
-      getOptionLabel={(option) => option.name}
-      options={options || []}
-      loading={loading}
-      renderOption={(props, option) => (
-        <Box
-          component="li"
-          sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}
-          key={option.id}
-        >
-          <div className={styles["option"]}
-            onClick={e => {
-              redirect(option.name, option.longitude, option.latitude);
-            }}
+    <div className={styles["search-bar-container"]}>
+      <Logo />
+      <Autocomplete
+        className={`${styles[visible ? "visible" : "hidden"]}`}
+        sx={{ width: 250 }}
+        open={open}
+        onKeyDown={e => {
+          handleKeyPress(e)
+        }}
+        onOpen={() => {
+          setOpen(true);
+        }}
+        onClose={() => {
+          setOpen(false);
+        }}
+        isOptionEqualToValue={(option, value) => option.id === value.id || true}
+        getOptionLabel={(option) => option.name}
+        options={options || []}
+        loading={loading}
+        renderOption={(props, option) => (
+          <Box
+            component="li"
+            sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}
+            key={option.id}
           >
-            <img
-              loading="lazy"
-              width="20"
-              src={`https://flagcdn.com/w20/${option.country_code.toLowerCase()}.png`}
-              srcSet={`https://flagcdn.com/w40/${option.country_code.toLowerCase()}.png 2x`}
-              alt={option.country_code}
-            />
-            {option.name}
-          </div>
-        </Box>
-      )}
-      renderInput={(params) => (
-        <TextField
-          className={styles["search-input"]}
-          {...params}
-          onChange={handleInputChange}
-          label="Your city..."
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {loading ? <CircularProgress color="inherit" size={15} /> : null}
-              </>
-            ),
-          }}
-        />
-      )}
-    />
+            <div className={styles["option"]}
+              onClick={e => {
+                redirect(option.name, option.longitude, option.latitude);
+              }}
+            >
+              <img
+                loading="lazy"
+                width="20"
+                src={`https://flagcdn.com/w20/${option.country_code.toLowerCase()}.png`}
+                srcSet={`https://flagcdn.com/w40/${option.country_code.toLowerCase()}.png 2x`}
+                alt={option.country_code}
+              />
+              {option.name}
+            </div>
+          </Box>
+        )}
+        renderInput={(params) => (
+          <TextField
+            className={styles["search-input"]}
+            {...params}
+            onChange={handleInputChange}
+            label="Your city..."
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                  {loading ? <CircularProgress color="inherit" size={15} /> : null}
+                </>
+              ),
+            }}
+          />
+        )}
+      />
+    </div>
   );
 }
 

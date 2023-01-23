@@ -1,11 +1,30 @@
-.option {
+.search-bar-container {
+  position: relative;
   width: 100%;
-}
-.search-input {
-  input {
-    height: 0.8em;
+  .option {
+    width: 100%;
   }
-  label {
-    font-size: 0.8em;
+  .search-input {
+    input {
+      height: 0.8em;
+    }
+    label {
+      font-size: 0.8em;
+    }
+  }
+  .hidden {
+    display: none;
+  }
+  .visible {
+    display: block;
+    width: 100%;
+    opacity: 1;
+    pointer-events: all;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
   }
 }

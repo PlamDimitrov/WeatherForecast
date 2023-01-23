@@ -4,11 +4,13 @@
   margin: auto;
   .city-name {
     padding: 2vh;
-    // padding-bottom: 5%;
     h1,
     h3 {
       margin: 0;
       color: rgb(38, 46, 215);
+    }
+    h1 {
+      margin-left: -2vh;
     }
   }
   .forecast-body {

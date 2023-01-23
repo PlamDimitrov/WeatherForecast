@@ -11,6 +11,9 @@
   margin: 0;
   color: rgb(38, 46, 215);
 }
+.forecast-main-container .city-name h1 {
+  margin-left: -2vh;
+}
 .forecast-main-container .forecast-body .forecast-period-option {
   display: flex;
   flex-direction: row;
