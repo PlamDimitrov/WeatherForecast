@@ -1,6 +1,6 @@
 .App {
   background-color: rgb(121, 178, 236);
-  background-image: url("../img/clouds.png");
-  background-size: contain;
+  background-image: url("../img/clouds_sprites.png");
+  background-size: 5000px;
   min-height: 100vh;
 }

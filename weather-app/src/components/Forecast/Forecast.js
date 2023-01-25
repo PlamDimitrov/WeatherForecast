@@ -10,12 +10,20 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+
 const Forecast = () => {
   const { cityNameUrl, longitude, latitude } = useParams();
   const dispatch = useDispatch()
   const city = useSelector(selectedCity);
   const weather = useSelector(selectedCityWeather);
   const [loading, setLoading] = useState(false);
+  const [value, setValue] = React.useState("24-hours");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const getClientLocation = async () => {
     try {
@@ -80,25 +88,27 @@ const Forecast = () => {
         </h3>
       </div>
       <div className={`${styles["forecast-body"]}`}>
+        <Box sx={{ width: '100%' }}>
+          <Tabs
+            className={`${styles["forecast-period-option"]}`}
+            value={value}
+            onChange={handleChange}
+            aria-label="tabs"
+            textColor="red"
+            TabIndicatorProps={{
+              style: {
+                background: "rgb(218, 237, 14)",
+                height: "4px",
+              }
+            }}
+            variant='fullWidth'
 
-        <Box
-          sx={{
-            display: 'flex',
-            width: '100%',
-            flexDirection: 'column',
-            alignItems: 'center',
-            '& > *': {
-              m: 1,
-            },
-          }}
-        >
-          <ButtonGroup className={`${styles["forecast-period-option"]}`} variant="contained" aria-label="outlined primary button group">
-            <Button>24 hours</Button>
-            <Button>10 Days</Button>
-            <Button>Weekend</Button>
-          </ButtonGroup>
+          >
+            <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="24-hours" label="24 hours" />
+            <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="10-days" label="10 Days" />
+            <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="weekend" label="Weekend" />
+          </Tabs>
         </Box>
-
         <div className={`${styles["forecast-container"]}`}>
           {JSON.stringify(city)}
           {JSON.stringify(weather)}

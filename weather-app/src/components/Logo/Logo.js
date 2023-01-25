@@ -7,7 +7,7 @@ import styles from './Logo.module.css';
 const Logo = () => {
 
   return (
-    <p className={styles["logo"]}>W<span>i</span>NDY.<span>eu</span></p>
+    <p className={styles["logo"]}>W<span>i</span>NDY.<span className={styles["last"]}>eu</span></p>
   )
 }
 
