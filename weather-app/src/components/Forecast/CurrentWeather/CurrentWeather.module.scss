@@ -1,0 +1,26 @@
+@import "../../../Colors.scss";
+
+.current-weather-container {
+  display: flex;
+  border-bottom: 1px dashed $gray;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    font-family: "Montserrat";
+    color: $yelow;
+    white-space: nowrap;
+  }
+  .weather-and-temperature {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      width: 60%;
+    }
+    h1 {
+      font-size: 2em;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 .forecast-main-container {
-  width: 80%;
+  width: 90%;
   overflow: hidden;
   margin: auto;
   .city-name {
@@ -32,6 +32,7 @@
     }
     .forecast-container {
       background-color: white;
+      padding: 0.8em;
     }
   }
 }

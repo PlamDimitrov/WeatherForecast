@@ -1,0 +1,24 @@
+.current-weather-container {
+  display: flex;
+  border-bottom: 1px dashed rgb(179, 179, 179);
+  flex-direction: column;
+  align-items: center;
+}
+.current-weather-container h1 {
+  font-family: "Montserrat";
+  color: rgb(218, 237, 14);
+  white-space: nowrap;
+}
+.current-weather-container .weather-and-temperature {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.current-weather-container .weather-and-temperature img {
+  width: 60%;
+}
+.current-weather-container .weather-and-temperature h1 {
+  font-size: 2em;
+}

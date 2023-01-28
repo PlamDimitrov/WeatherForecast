@@ -6,12 +6,11 @@ import api from "../../api";
 
 import styles from './Forecast.module.css';
 
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
-
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+
+import CurrentWeather from './CurrentWeather/CurrentWeather';
 
 const Forecast = () => {
   const { cityNameUrl, longitude, latitude } = useParams();
@@ -36,7 +35,7 @@ const Forecast = () => {
           latitude: city.latitude
         }
         const weather = await api.getWeatherByGeoLocation(location);
-        dispatch(setNewWeather(weather))
+        dispatch(setNewWeather(weather.data))
       }
     } catch (error) {
       console.log(`Error on geting client location ${error}`);
@@ -94,7 +93,6 @@ const Forecast = () => {
             value={value}
             onChange={handleChange}
             aria-label="tabs"
-            textColor="red"
             TabIndicatorProps={{
               style: {
                 background: "rgb(218, 237, 14)",
@@ -104,14 +102,16 @@ const Forecast = () => {
             variant='fullWidth'
 
           >
-            <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="24-hours" label="24 hours" />
+            <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="24-hours" label="24 h" />
             <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="10-days" label="10 Days" />
             <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="weekend" label="Weekend" />
           </Tabs>
         </Box>
         <div className={`${styles["forecast-container"]}`}>
-          {JSON.stringify(city)}
-          {JSON.stringify(weather)}
+
+          {value === "24-hours" ? <CurrentWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
+          {value === "10-days" ? JSON.stringify(weather) : ""}
+          {value === "weekend" ? "3" : ""}
         </div>
       </div>
     </div >
