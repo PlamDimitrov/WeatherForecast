@@ -95,7 +95,7 @@ const Forecast = () => {
             aria-label="tabs"
             TabIndicatorProps={{
               style: {
-                background: "rgb(218, 237, 14)",
+                background: "rgb(229, 179, 67)",
                 height: "4px",
               }
             }}

@@ -1,4 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Proxima+Nova");
 .App {
+  font-family: "Proxima Nova";
   background-color: rgb(121, 178, 236);
   background-image: url("./img/clouds_sprites.png");
   background-size: 5000px;
