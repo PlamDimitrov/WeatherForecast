@@ -31,3 +31,9 @@
 .current-weather-container .weather-and-temperature h1 {
   font-size: 2em;
 }
+.current-weather-container .additional-information {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}

@@ -1,0 +1,14 @@
+.info-icon-small {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0.2em 1em 0.2em 1em;
+  img {
+    width: 1.5em;
+  }
+  h3 {
+    margin: 0;
+    font-size: 1em;
+  }
+}

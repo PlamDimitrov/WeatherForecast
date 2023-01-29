@@ -32,4 +32,10 @@
       font-size: 2em;
     }
   }
+  .additional-information {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+  }
 }
