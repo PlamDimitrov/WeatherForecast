@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux'
 import { selectedCityWeather } from '../../../store/citySlice';
 
@@ -7,10 +7,12 @@ import WeatherDecoder from '../../../helpers/weatherDecoder';
 
 import styles from './CurrentWeather.module.css';
 import InfoIconSmall from '../../InfoIconSmall/InfoIconSmall';
+import RowForcast from '../../RowForcast/RowForcast';
 
 
 const CurrentWeather = ({ currentWeather, hourlyUnits }) => {
   const weather = useSelector(selectedCityWeather);
+  const [thirdDayName, setThirdDayName] = useState(null);
 
   const emptyCurrentTemperatureData = () => {
     return (
@@ -36,48 +38,84 @@ const CurrentWeather = ({ currentWeather, hourlyUnits }) => {
     return weather.hourly.time.findIndex((time) => Date.parse(time) === rounded);
   }
 
+  useEffect(() => {
+    if (weather.daily != undefined) {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const date = new Date(weather.daily.time[2]);
+      setThirdDayName(days[date.getDay()])
+    }
+  }, [weather.daily])
+
   return (
-    <div className={styles["current-weather-container"]}>
-      <h1>The weather now</h1>
-      <div className={styles["weather-and-temperature"]}>
-        {weather.current_weather ? <img src={WeatherDecoder(weather.current_weather.weathercode).img} alt="current weather" /> : emptyCurrentWeatherData()}
-        {hourlyUnits ? <h1><span>{currentWeather.temperature}</span>{hourlyUnits.temperature_2m}</h1> : emptyCurrentTemperatureData()}
+    <>
+      <div className={styles["current-weather-container"]}>
+        <h1>The weather now</h1>
+        <div className={styles["weather-and-temperature"]}>
+          {weather.current_weather ? <img src={WeatherDecoder(weather.current_weather.weathercode).img} alt="current weather" /> : emptyCurrentWeatherData()}
+          {hourlyUnits ? <h1><span>{currentWeather.temperature}</span>{hourlyUnits.temperature_2m}</h1> : emptyCurrentTemperatureData()}
+        </div>
+        {weather.current_weather ? <h2>{WeatherDecoder(weather.current_weather.weathercode).description}</h2> : emptyCurrentWeatherData()}
+        {weather.current_weather ? <h3>Apparent temperature {weather.hourly.apparent_temperature[getCurrentTimeIndex()]} <span>{weather.hourly_units.apparent_temperature}</span></h3> : emptyCurrentWeatherData()}
+        <div className={styles["additional-information"]}>
+          {weather.hourly
+            ? <InfoIconSmall {...{
+              type: "humidity",
+              value: weather.hourly.relativehumidity_2m[getCurrentTimeIndex()],
+              units: weather.hourly_units.relativehumidity_2m,
+            }} />
+            : null}
+          {weather.hourly
+            ? <InfoIconSmall {...{
+              type: "windSpeed",
+              value: weather.hourly.windspeed_10m[getCurrentTimeIndex()],
+              units: weather.hourly_units.windspeed_10m,
+            }} />
+            : null}
+          {weather.hourly
+            ? <InfoIconSmall {...{
+              type: "sunsrise",
+              value: weather.daily.sunrise[0].slice(-5),
+            }} />
+            : null}
+          {weather.hourly
+            ? <InfoIconSmall {...{
+              type: "sunset",
+              value: weather.daily.sunset[0].slice(-5),
+            }} />
+            : null}
+        </div>
       </div>
-      {weather.current_weather ? <h2>{WeatherDecoder(weather.current_weather.weathercode).description}</h2> : emptyCurrentWeatherData()}
-      {weather.current_weather ? <h3>Apparent temperature {weather.hourly.apparent_temperature[getCurrentTimeIndex()]} <span>{weather.hourly_units.apparent_temperature}</span></h3> : emptyCurrentWeatherData()}
-      <div className={styles["additional-information"]}>
-        {weather.hourly
-          ? <InfoIconSmall {...{
-            type: "humidity",
-            value: weather.hourly.relativehumidity_2m[getCurrentTimeIndex()],
-            units: weather.hourly_units.relativehumidity_2m,
-          }} />
+      <div className={styles["three-day-forecast"]}>
+        {weather.daily
+          ? <>
+            <RowForcast {...{
+              title: "Today",
+              subTitle: weather.daily.time[0],
+              wearherCode: weather.daily.weathercode[0],
+              temperatureMin: weather.daily.temperature_2m_min[0],
+              temperatureMax: weather.daily.temperature_2m_max[0],
+              units: weather.daily_units.temperature_2m_min
+            }} />
+            <RowForcast {...{
+              title: "Tomorrow",
+              subTitle: weather.daily.time[1],
+              wearherCode: weather.daily.weathercode[1],
+              temperatureMin: weather.daily.temperature_2m_min[1],
+              temperatureMax: weather.daily.temperature_2m_max[1],
+              units: weather.daily_units.temperature_2m_min
+            }} />
+            <RowForcast {...{
+              title: thirdDayName,
+              subTitle: weather.daily.time[2],
+              wearherCode: weather.daily.weathercode[2],
+              temperatureMin: weather.daily.temperature_2m_min[2],
+              temperatureMax: weather.daily.temperature_2m_max[2],
+              units: weather.daily_units.temperature_2m_min
+            }} />
+          </>
           : null}
-        {weather.hourly
-          ? <InfoIconSmall {...{
-            type: "windSpeed",
-            value: weather.hourly.windspeed_10m[getCurrentTimeIndex()],
-            units: weather.hourly_units.windspeed_10m,
-          }} />
-          : null}
-        {weather.hourly
-          ? <InfoIconSmall {...{
-            type: "sunsrise",
-            value: weather.daily.sunrise[0].slice(-5),
-          }} />
-          : null}
-        {weather.hourly
-          ? <InfoIconSmall {...{
-            type: "sunset",
-            value: weather.daily.sunset[0].slice(-5),
-          }} />
-          : null}
-        {/* <h1>{weather.hourly ? JSON.stringify(weather.hourly.relativehumidity_2m[getCurrentTimeIndex()]) : null}</h1>
-        <h1>{weather.hourly ? JSON.stringify(weather.hourly.windspeed_10m[getCurrentTimeIndex()]) : null}</h1>
-        <h1>{weather.daily ? JSON.stringify(weather.daily.sunrise[0].slice(-5)) : null}</h1>
-        <h1>{weather.daily ? JSON.stringify(weather.daily.sunset[0].slice(-5)) : null}</h1> */}
       </div>
-    </div>
+    </>
   );
 }
 

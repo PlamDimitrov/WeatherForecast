@@ -1,0 +1,43 @@
+@import "../../Colors.scss";
+
+.forecast-information {
+  height: 3em;
+  border-bottom: 1px dashed $gray;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  color: $yelow;
+  h1 {
+    font-size: 1em;
+  }
+  .title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    height: 100%;
+    .main {
+      margin: 0;
+    }
+    .secondary {
+      font-size: 0.6em;
+      margin: 0;
+    }
+  }
+  .info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    img {
+      height: 3em;
+    }
+    .min {
+      color: $light-blue;
+    }
+    .max {
+      color: $light-red;
+    }
+  }
+}

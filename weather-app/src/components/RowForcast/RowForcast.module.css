@@ -1,0 +1,41 @@
+.forecast-information {
+  height: 3em;
+  border-bottom: 1px dashed rgb(179, 179, 179);
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(229, 179, 67);
+}
+.forecast-information h1 {
+  font-size: 1em;
+}
+.forecast-information .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  height: 100%;
+}
+.forecast-information .title .main {
+  margin: 0;
+}
+.forecast-information .title .secondary {
+  font-size: 0.6em;
+  margin: 0;
+}
+.forecast-information .info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+}
+.forecast-information .info-container img {
+  height: 3em;
+}
+.forecast-information .info-container .min {
+  color: rgb(121, 178, 236);
+}
+.forecast-information .info-container .max {
+  color: rgb(236, 121, 121);
+}
