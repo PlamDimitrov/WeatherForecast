@@ -90,27 +90,18 @@ const CurrentWeather = ({ currentWeather, hourlyUnits }) => {
           ? <>
             <RowForcast {...{
               title: "Today",
-              subTitle: weather.daily.time[0],
-              wearherCode: weather.daily.weathercode[0],
-              temperatureMin: weather.daily.temperature_2m_min[0],
-              temperatureMax: weather.daily.temperature_2m_max[0],
-              units: weather.daily_units.temperature_2m_min
+              forecast: weather,
+              index: 0
             }} />
             <RowForcast {...{
               title: "Tomorrow",
-              subTitle: weather.daily.time[1],
-              wearherCode: weather.daily.weathercode[1],
-              temperatureMin: weather.daily.temperature_2m_min[1],
-              temperatureMax: weather.daily.temperature_2m_max[1],
-              units: weather.daily_units.temperature_2m_min
+              forecast: weather,
+              index: 1
             }} />
             <RowForcast {...{
               title: thirdDayName,
-              subTitle: weather.daily.time[2],
-              wearherCode: weather.daily.weathercode[2],
-              temperatureMin: weather.daily.temperature_2m_min[2],
-              temperatureMax: weather.daily.temperature_2m_max[2],
-              units: weather.daily_units.temperature_2m_min
+              forecast: weather,
+              index: 2
             }} />
           </>
           : null}

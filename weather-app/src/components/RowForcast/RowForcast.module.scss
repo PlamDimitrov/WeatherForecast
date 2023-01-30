@@ -8,6 +8,7 @@
   justify-content: space-between;
   align-items: center;
   color: $yelow;
+  padding: 0 0.5em 0 0.5em;
   h1 {
     font-size: 1em;
   }
@@ -34,10 +35,56 @@
       height: 3em;
     }
     .min {
+      font-weight: lighter;
       color: $light-blue;
     }
     .max {
+      font-weight: lighter;
       color: $light-red;
     }
+  }
+}
+.info-detailed {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: height 2s, opacity 3s;
+  overflow: hidden;
+  h3 {
+    color: $yelow;
+    font-weight: lighter;
+    font-size: 1em;
+    margin: 0.5em;
+  }
+}
+
+.hidden {
+  animation-name: hide;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.active {
+  animation-name: show;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hide {
+  from {
+    max-height: 170px;
+  }
+  to {
+    max-height: 0px;
+  }
+}
+@keyframes show {
+  from {
+    max-height: 0px;
+  }
+  to {
+    max-height: 170px;
   }
 }
