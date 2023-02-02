@@ -7,11 +7,18 @@
 .current-weather-container h1,
 .current-weather-container h2,
 .current-weather-container h3 {
-  color: rgb(229, 179, 67);
+  color: rgb(121, 178, 236);
   white-space: nowrap;
   margin: 0.2em;
 }
+.current-weather-container h1 {
+  color: rgb(121, 178, 236);
+}
+.current-weather-container h2 {
+  color: rgb(229, 179, 67);
+}
 .current-weather-container h3 {
+  color: rgb(121, 178, 236);
   font-weight: lighter;
 }
 .current-weather-container h3 span {

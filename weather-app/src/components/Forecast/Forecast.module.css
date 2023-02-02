@@ -15,18 +15,21 @@
   font-weight: normal;
   margin: 0;
 }
+.forecast-main-container .forecast-body {
+  border-radius: 15px;
+  overflow: hidden;
+}
 .forecast-main-container .forecast-body .forecast-period-option {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-radius: 10px 10px 0 0;
 }
-.forecast-main-container .forecast-body .forecast-period-option button {
-  background-color: rgba(65, 108, 209, 0.5);
-  color: rgb(229, 179, 67);
-  font-size: 0.7em;
+.forecast-main-container .forecast-body .forecast-period-option .tab {
+  padding: 1px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(121, 178, 236);
+  font-size: 0.6em;
   font-family: "Monsterrat";
-  font-size: 0.8em;
   font-weight: bolder;
 }
 .forecast-main-container .forecast-body .forecast-container {

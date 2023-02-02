@@ -17,17 +17,18 @@
     }
   }
   .forecast-body {
+    border-radius: 15px;
+    overflow: hidden;
     .forecast-period-option {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      border-radius: 10px 10px 0 0;
-      button {
-        background-color: $transparent-blue;
-        color: $yelow;
-        font-size: 0.7em;
+      .tab {
+        padding: 1px;
+        background-color: $white;
+        color: $light-blue;
+        font-size: 0.6em;
         font-family: "Monsterrat";
-        font-size: 0.8em;
         font-weight: bolder;
       }
     }

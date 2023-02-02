@@ -18,7 +18,7 @@ const Forecast = () => {
   const city = useSelector(selectedCity);
   const weather = useSelector(selectedCityWeather);
   const [loading, setLoading] = useState(false);
-  const [value, setValue] = React.useState("24-hours");
+  const [value, setValue] = React.useState("now");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -87,8 +87,9 @@ const Forecast = () => {
         </h3>
       </div>
       <div className={`${styles["forecast-body"]}`}>
-        <Box sx={{ width: '100%' }}>
+        <Box>
           <Tabs
+            variant='fullWidth'
             className={`${styles["forecast-period-option"]}`}
             value={value}
             onChange={handleChange}
@@ -96,20 +97,19 @@ const Forecast = () => {
             TabIndicatorProps={{
               style: {
                 background: "rgb(229, 179, 67)",
-                height: "4px",
+                height: "2px",
               }
             }}
-            variant='fullWidth'
-
           >
-            <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="24-hours" label="24 h" />
-            <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="10-days" label="10 Days" />
-            <Tab sx={{ width: "33.3%" }} className={`${styles["tab"]}`} value="weekend" label="Weekend" />
+            <Tab sx={{ borderBottom: 1 }} className={`${styles["tab"]}`} value="now" label="Now" />
+            <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="24-hours" label="24 h" />
+            <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="10-days" label="10 Days" />
+            <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="weekend" label="Weekend" />
           </Tabs>
         </Box>
         <div className={`${styles["forecast-container"]}`}>
-
-          {value === "24-hours" ? <CurrentWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
+          {value === "now" ? <CurrentWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
+          {value === "24-hours" ? JSON.stringify(weather) : ""}
           {value === "10-days" ? JSON.stringify(weather) : ""}
           {value === "weekend" ? "3" : ""}
         </div>

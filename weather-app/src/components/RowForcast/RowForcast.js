@@ -4,6 +4,10 @@ import WeatherDecoder from '../../helpers/weatherDecoder';
 
 import styles from './RowForcast.module.css';
 
+import imgCompass from '../../img/weather-icons/compass.svg';
+
+import Grid from '@mui/material/Grid';
+
 const RowForcast = ({
   title = "---",
   forecast = null,
@@ -14,7 +18,19 @@ const RowForcast = ({
   const [temperatureMin, setTemperatureMin] = useState(null);
   const [temperatureMax, setTemperatureMax] = useState(null);
   const [units, setUnits] = useState(null);
-  const [additionalInfoActive, setAdditionalInfoActive] = useState(false);
+  const [additionalInfoActive, setAdditionalInfoActive] = useState(null);
+
+  const showOrHideRow = () => {
+    switch (additionalInfoActive) {
+      case false:
+        return styles["hidden"];
+      case true:
+        return styles["active"];
+
+      default:
+        return "";
+    }
+  }
 
   const showAdditionalInfo = () => {
     setAdditionalInfoActive(!additionalInfoActive);
@@ -65,11 +81,21 @@ const RowForcast = ({
           <h1 className={styles["min"]}>{temperatureMin}{units}</h1>
         </div>
       </div >
-      <div className={`${styles["info-detailed"]} ${additionalInfoActive ? styles["active"] : styles["hidden"]}`} >
-        <h3>Wind direction: {getWindDirection(forecast.daily.winddirection_10m_dominant[index])}</h3>
-        <h3>Wind speed: {forecast.daily.windspeed_10m_max[index]} {forecast.daily_units.windspeed_10m_max}</h3>
-        <h3>Precipitation: {forecast.daily.precipitation_sum[index]} {forecast.daily_units.precipitation_sum}</h3>
-        <h3>Solar radiation: {forecast.daily.shortwave_radiation_sum[index]} {forecast.daily_units.shortwave_radiation_sum}</h3>
+      <div className={`${styles["info-detailed"]} ${showOrHideRow()}`} >
+        <Grid container spacing={0}>
+          <Grid item>
+            <h3>Wind direction:</h3>
+            <h3>Wind speed:</h3>
+            <h3>Precipitation:</h3>
+            <h3>Solar radiation:</h3>
+          </Grid>
+          <Grid item>
+            <h3>{getWindDirection(forecast.daily.winddirection_10m_dominant[index])}</h3>
+            <h3>{forecast.daily.windspeed_10m_max[index]} {forecast.daily_units.windspeed_10m_max}</h3>
+            <h3>{forecast.daily.precipitation_sum[index]} {forecast.daily_units.precipitation_sum}</h3>
+            <h3>{forecast.daily.shortwave_radiation_sum[index]} {forecast.daily_units.shortwave_radiation_sum}</h3>
+          </Grid>
+        </Grid>
       </div>
     </>
   )
