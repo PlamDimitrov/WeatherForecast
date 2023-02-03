@@ -6,29 +6,42 @@ import styles from './DaylyWeather.module.css';
 import RowForcast from '../../RowForcast/RowForcast';
 
 
-const DaylyWeather = ({ currentWeather, hourlyUnits }) => {
+const DaylyWeather = ({ type = "week" }) => {
   const weather = useSelector(selectedCityWeather);
 
   const renderRows = () => {
-    const rows = []
+    const rows = [];
     for (let i = 0; i < 7; i++) {
       const dayName = new Date(weather.daily.time[i]).toLocaleDateString('en-us', { weekday: "long" });
-      rows.push(
-        <RowForcast key={i} {...{
-          title: dayName,
-          forecast: weather,
-          index: i,
-          type: "days"
-        }} />
-      )
+      if (type === "week") {
+        rows.push(
+          <RowForcast key={i} {...{
+            title: dayName,
+            forecast: weather,
+            index: i,
+            type: "days"
+          }} />
+        )
+      } else if (type === "weekend") {
+        if (dayName === "Friday" || dayName === "Saturday" || dayName === "Sunday") {
+          rows.push(
+            <RowForcast key={i} {...{
+              title: dayName,
+              forecast: weather,
+              index: i,
+              type: "days"
+            }} />
+          )
+        }
+      }
     }
-    return rows
+    return rows;
   }
 
   return (
     <>
       <div className={styles["dayly-forecast"]}>
-        <h1>Next 6 Days</h1>
+        <h1>{type === "week" ? "Next 6 Days" : "Weekend"}</h1>
       </div>
       {weather.hourly
         ? <>

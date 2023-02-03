@@ -111,9 +111,9 @@ const Forecast = () => {
         </Box>
         <div className={`${styles["forecast-container"]}`}>
           {value === "now" ? <CurrentWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
-          {value === "24-hours" ? <HourlyWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
-          {value === "6-days" ? <DaylyWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
-          {value === "weekend" ? "3" : ""}
+          {value === "24-hours" ? <HourlyWeather /> : ""}
+          {value === "6-days" ? <DaylyWeather {...{ type: "week" }} /> : ""}
+          {value === "weekend" ? <DaylyWeather {...{ type: "weekend" }} /> : ""}
         </div>
       </div>
     </div >

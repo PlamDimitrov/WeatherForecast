@@ -49,7 +49,7 @@ const HourlyWeather = () => {
   return (
     <>
       <div className={styles["hourly-forecast"]}>
-        <h1>24 Hours</h1>
+        <h1>Next 24 Hours</h1>
       </div>
       {weather.hourly
         ? <>
