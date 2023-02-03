@@ -11,6 +11,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 import CurrentWeather from './CurrentWeather/CurrentWeather';
+import HourlyWeather from './HourlyWeather/HourlyWeather';
 
 const Forecast = () => {
   const { cityNameUrl, longitude, latitude } = useParams();
@@ -109,7 +110,7 @@ const Forecast = () => {
         </Box>
         <div className={`${styles["forecast-container"]}`}>
           {value === "now" ? <CurrentWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
-          {value === "24-hours" ? JSON.stringify(weather) : ""}
+          {value === "24-hours" ? <HourlyWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
           {value === "10-days" ? JSON.stringify(weather) : ""}
           {value === "weekend" ? "3" : ""}
         </div>

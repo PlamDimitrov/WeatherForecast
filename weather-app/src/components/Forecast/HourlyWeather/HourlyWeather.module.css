@@ -1,0 +1,13 @@
+.hourly-forecast {
+  display: flex;
+  border-bottom: 1px dashed rgb(179, 179, 179);
+  flex-direction: column;
+  align-items: center;
+}
+.hourly-forecast h1,
+.hourly-forecast h2,
+.hourly-forecast h3 {
+  color: rgb(121, 178, 236);
+  white-space: nowrap;
+  margin: 0.2em;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import WeatherDecoder from '../../helpers/weatherDecoder';
 
@@ -12,6 +12,7 @@ const RowForcast = ({
   title = "---",
   forecast = null,
   index = 0,
+  type = "days"
 }) => {
   const [subTitle, setSubTitle] = useState(null);
   const [wearherCode, setWearherCode] = useState(null);
@@ -19,6 +20,13 @@ const RowForcast = ({
   const [temperatureMax, setTemperatureMax] = useState(null);
   const [units, setUnits] = useState(null);
   const [additionalInfoActive, setAdditionalInfoActive] = useState(null);
+  const [winddirection, setWinddirection] = useState(null);
+  const [windspeed, setWindspeed] = useState(null);
+  const [windspeedUnits, setWindspeedUnits] = useState(null);
+  const [precipitation, setPrecipitation] = useState(null);
+  const [precipitationUnits, setPrecipitationUnits] = useState(null);
+  const [radiation, setRadiation] = useState(null);
+  const [radiationUnits, setRadiationUnits] = useState(null);
 
   const showOrHideRow = () => {
     switch (additionalInfoActive) {
@@ -61,15 +69,45 @@ const RowForcast = ({
     }
   }
 
-  useEffect(() => {
-    setSubTitle(forecast.daily.time[index]);
-    setWearherCode(forecast.daily.weathercode[index]);
-    setTemperatureMin(forecast.daily.temperature_2m_min[index]);
-    setTemperatureMax(forecast.daily.temperature_2m_max[index]);
-    setUnits(forecast.daily_units.temperature_2m_min);
+  useLayoutEffect(() => {
+    switch (type) {
+      case "days":
+        setSubTitle(forecast.daily.time[index]);
+        setWearherCode(forecast.daily.weathercode[index]);
+        setTemperatureMin(forecast.daily.temperature_2m_min[index]);
+        setTemperatureMax(forecast.daily.temperature_2m_max[index]);
+        setUnits(forecast.daily_units.temperature_2m_min);
+        setWinddirection(forecast.daily.winddirection_10m_dominant[index]);
+        setWindspeed(forecast.daily.windspeed_10m_max[index]);
+        setWindspeedUnits(forecast.daily_units.windspeed_10m_max);
+        setPrecipitation(forecast.daily.precipitation_sum[index]);
+        setPrecipitationUnits(forecast.daily_units.precipitation_sum);
+        setRadiation(forecast.daily.shortwave_radiation_sum[index]);
+        setRadiationUnits(forecast.daily_units.shortwave_radiation_sum);
+        break;
+      case "hours":
+        setSubTitle(forecast.hourly.time[index].split("T")[0]);
+        setWearherCode(forecast.hourly.weathercode[index]);
+        setTemperatureMin(null);
+        setTemperatureMax(forecast.hourly.temperature_2m[index]);
+        setUnits(forecast.hourly_units.temperature_2m);
+        setWinddirection(forecast.hourly.winddirection_10m[index]);
+        setWindspeed(forecast.hourly.windspeed_10m[index]);
+        setWindspeedUnits(forecast.hourly_units.windspeed_10m);
+        setPrecipitation(forecast.hourly.precipitation[index]);
+        setPrecipitationUnits(forecast.hourly_units.precipitation);
+        setRadiation(forecast.hourly.direct_radiation[index]);
+        setRadiationUnits(forecast.hourly_units.direct_radiation);
+        break;
+
+      default:
+        console.log("Error on rowForcast data set.");
+        break;
+    }
   }, [forecast])
   return (
     <>
+      <span>{temperatureMin != null}</span>
       <div className={styles["forecast-information"]} onClick={showAdditionalInfo}>
         <div className={styles["title"]}>
           <h1 className={styles["main"]}>{title}</h1>
@@ -77,8 +115,8 @@ const RowForcast = ({
         </div>
         <div className={styles["info-container"]} >
           <img src={WeatherDecoder(wearherCode).img} alt="weather" />
-          <h1 className={styles["max"]}>{temperatureMax}{units}</h1>
-          <h1 className={styles["min"]}>{temperatureMin}{units}</h1>
+          {temperatureMin !== null ? <h1 className={styles["min"]}>{temperatureMin}{units}</h1> : null}
+          {temperatureMax !== null ? <h1 className={styles["max"]}>{temperatureMax}{units}</h1> : null}
         </div>
       </div >
       <div className={`${styles["info-detailed"]} ${showOrHideRow()}`} >
@@ -90,10 +128,10 @@ const RowForcast = ({
             <h3>Solar radiation:</h3>
           </Grid>
           <Grid item>
-            <h3>{getWindDirection(forecast.daily.winddirection_10m_dominant[index])}</h3>
-            <h3>{forecast.daily.windspeed_10m_max[index]} {forecast.daily_units.windspeed_10m_max}</h3>
-            <h3>{forecast.daily.precipitation_sum[index]} {forecast.daily_units.precipitation_sum}</h3>
-            <h3>{forecast.daily.shortwave_radiation_sum[index]} {forecast.daily_units.shortwave_radiation_sum}</h3>
+            <h3>{getWindDirection(winddirection)}</h3>
+            <h3>{windspeed} {windspeedUnits}</h3>
+            <h3>{precipitation} {precipitationUnits}</h3>
+            <h3>{radiation} {radiationUnits}</h3>
           </Grid>
         </Grid>
       </div>
