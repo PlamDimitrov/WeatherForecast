@@ -12,6 +12,7 @@ import Tab from '@mui/material/Tab';
 
 import CurrentWeather from './CurrentWeather/CurrentWeather';
 import HourlyWeather from './HourlyWeather/HourlyWeather';
+import DaylyWeather from './DaylyWeather/DaylyWeather';
 
 const Forecast = () => {
   const { cityNameUrl, longitude, latitude } = useParams();
@@ -104,14 +105,14 @@ const Forecast = () => {
           >
             <Tab sx={{ borderBottom: 1 }} className={`${styles["tab"]}`} value="now" label="Now" />
             <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="24-hours" label="24 h" />
-            <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="10-days" label="10 Days" />
+            <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="6-days" label="6 Days" />
             <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="weekend" label="Weekend" />
           </Tabs>
         </Box>
         <div className={`${styles["forecast-container"]}`}>
           {value === "now" ? <CurrentWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
           {value === "24-hours" ? <HourlyWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
-          {value === "10-days" ? JSON.stringify(weather) : ""}
+          {value === "6-days" ? <DaylyWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
           {value === "weekend" ? "3" : ""}
         </div>
       </div>

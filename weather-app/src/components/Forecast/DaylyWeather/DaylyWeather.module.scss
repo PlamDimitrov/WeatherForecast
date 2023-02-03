@@ -1,0 +1,15 @@
+@import "../../../Colors.scss";
+
+.dayly-forecast {
+  display: flex;
+  border-bottom: 1px dashed $gray;
+  flex-direction: column;
+  align-items: center;
+  h1,
+  h2,
+  h3 {
+    color: $light-blue;
+    white-space: nowrap;
+    margin: 0.2em;
+  }
+}
