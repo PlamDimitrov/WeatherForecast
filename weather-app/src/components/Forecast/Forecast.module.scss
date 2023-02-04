@@ -1,8 +1,7 @@
 @import "../../Colors.scss";
 
 .forecast-main-container {
-  width: 90%;
-  max-width: 1000px;
+  width: clamp(40%, 500px, 90%);
   overflow: hidden;
   margin: auto;
   .city-name {
@@ -34,7 +33,8 @@
     }
     .forecast-container {
       background-color: $white;
-      padding: 0.8em;
+      padding: 1.5em;
+      // min-height: 580px;
     }
   }
 }

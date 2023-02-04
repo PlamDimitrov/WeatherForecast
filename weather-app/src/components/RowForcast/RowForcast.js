@@ -1,10 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-
-import WeatherDecoder from '../../helpers/weatherDecoder';
+import { motion } from "framer-motion";
 
 import styles from './RowForcast.module.scss';
 
-import imgCompass from '../../img/weather-icons/compass.svg';
+import WeatherDecoder from '../../helpers/weatherDecoder';
 
 import Grid from '@mui/material/Grid';
 
@@ -106,9 +105,12 @@ const RowForcast = ({
     }
   }, [forecast])
   return (
-    <>
-      <span>{temperatureMin != null}</span>
-      <div className={styles["forecast-information"]} onClick={showAdditionalInfo}>
+    <div>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 400, damping: 15 }}
+        className={styles["forecast-information"]}
+        onClick={showAdditionalInfo}>
         <div className={styles["title"]}>
           <h1 className={styles["main"]}>{title}</h1>
           <h1 className={styles["secondary"]}>{subTitle}</h1>
@@ -119,7 +121,7 @@ const RowForcast = ({
           {temperatureMin !== null ? <h1 className={styles["min"]}>{temperatureMin}{units}</h1> : null}
           {temperatureMax !== null ? <h1 className={styles["max"]}>{temperatureMax}{units}</h1> : null}
         </div>
-      </div >
+      </motion.div >
       <div className={`${styles["info-detailed"]} ${showOrHideRow()}`} >
         <Grid container spacing={0}>
           <Grid item>
@@ -136,7 +138,7 @@ const RowForcast = ({
           </Grid>
         </Grid>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
+import { motion, AnimatePresence } from "framer-motion";
 import { selectedCityWeather, selectedCity, setNewWeather, setNewLocation } from '../../store/citySlice';
 import { useParams } from "react-router-dom";
 import api from "../../api";
@@ -69,6 +70,28 @@ const Forecast = () => {
     dispatch(setNewWeather(weather.data));
   }
 
+  const dropIn = {
+    hidden: {
+      height: 0,
+      opacity: 0,
+    },
+    visible: {
+      height: "auto",
+      opacity: 1,
+      transition: {
+        type: "linear",
+        duration: 1,
+      }
+    },
+    exit: {
+      height: 0,
+      opacity: 0,
+      transition: {
+        type: "tween",
+        duration: 0.5,
+      }
+    },
+  }
 
   useEffect(() => {
     if (cityNameUrl !== undefined & longitude !== undefined & latitude !== undefined) {
@@ -110,10 +133,57 @@ const Forecast = () => {
           </Tabs>
         </Box>
         <div className={`${styles["forecast-container"]}`}>
-          {value === "now" ? <CurrentWeather {...{ currentWeather: weather.current_weather, hourlyUnits: weather.hourly_units }} /> : ""}
-          {value === "24-hours" ? <HourlyWeather /> : ""}
-          {value === "6-days" ? <DailyWeather {...{ type: "week" }} /> : ""}
-          {value === "weekend" ? <DailyWeather {...{ type: "weekend" }} /> : ""}
+          <AnimatePresence >
+            {value === "now" && (
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={dropIn}
+              >
+                <CurrentWeather {...{
+                  currentWeather: weather.current_weather,
+                  hourlyUnits: weather.hourly_units
+                }} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence >
+            {value === "24-hours" && (
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={dropIn}
+              >
+                <HourlyWeather />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence >
+            {value === "6-days" && (
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={dropIn}
+              >
+                <DailyWeather {...{ type: "week" }} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {value === "weekend" && (
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={dropIn}
+              >
+                <DailyWeather {...{ type: "weekend" }} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div >

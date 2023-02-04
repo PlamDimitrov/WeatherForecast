@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import { selectedCityWeather } from '../../../store/citySlice';
 
@@ -39,8 +39,8 @@ const CurrentWeather = ({ currentWeather, hourlyUnits }) => {
     return index < 0 ? 0 : index;
   }
 
-  useEffect(() => {
-    if (weather.daily != undefined) {
+  useLayoutEffect(() => {
+    if (weather.daily !== undefined) {
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const date = new Date(weather.daily.time[2]);
       setThirdDayName(days[date.getDay()])
@@ -48,10 +48,11 @@ const CurrentWeather = ({ currentWeather, hourlyUnits }) => {
   }, [weather.daily])
 
   return (
-    <>
+    <div>
       <div className={styles["current-weather-container"]}>
         <h1>The weather now</h1>
-        <div className={styles["weather-and-temperature"]}>
+        <div
+          className={styles["weather-and-temperature"]}>
           {weather.current_weather
             ? <img src={WeatherDecoder(weather.current_weather.weathercode, true).img}
               alt="current weather" />
@@ -89,28 +90,26 @@ const CurrentWeather = ({ currentWeather, hourlyUnits }) => {
             : null}
         </div>
       </div>
-      <div className={styles["three-day-forecast"]}>
-        {weather.daily
-          ? <>
-            <RowForcast {...{
-              title: "Today",
-              forecast: weather,
-              index: 0
-            }} />
-            <RowForcast {...{
-              title: "Tomorrow",
-              forecast: weather,
-              index: 1
-            }} />
-            <RowForcast {...{
-              title: thirdDayName,
-              forecast: weather,
-              index: 2
-            }} />
-          </>
-          : null}
-      </div>
-    </>
+      {weather.daily && (
+        <div className={styles["three-day-forecast"]}>
+          <RowForcast {...{
+            title: "Today",
+            forecast: weather,
+            index: 0
+          }} />
+          <RowForcast {...{
+            title: "Tomorrow",
+            forecast: weather,
+            index: 1
+          }} />
+          <RowForcast {...{
+            title: thirdDayName,
+            forecast: weather,
+            index: 2
+          }} />
+        </div>
+      )}
+    </div>
   );
 }
 

@@ -44,5 +44,11 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
+    width: 100%;
   }
+}
+.three-day-forecast {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
