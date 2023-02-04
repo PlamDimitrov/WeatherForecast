@@ -114,7 +114,8 @@ const RowForcast = ({
           <h1 className={styles["secondary"]}>{subTitle}</h1>
         </div>
         <div className={styles["info-container"]} >
-          <img src={WeatherDecoder(wearherCode).img} alt="weather" />
+          <img src={WeatherDecoder(wearherCode, true).img}
+            alt="weather" />
           {temperatureMin !== null ? <h1 className={styles["min"]}>{temperatureMin}{units}</h1> : null}
           {temperatureMax !== null ? <h1 className={styles["max"]}>{temperatureMax}{units}</h1> : null}
         </div>

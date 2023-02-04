@@ -19,8 +19,9 @@ const HourlyWeather = () => {
   const getCurrentTimeIndex = () => {
     const event = new Date();
     const rounded = Date.parse(roundToNearestHour(event));
+    let index = weather.hourly.time.findIndex((time) => Date.parse(time) === rounded);
 
-    return weather.hourly.time.findIndex((time) => Date.parse(time) === rounded);
+    return index < 0 ? 0 : index;
   }
 
   const getCurrentTime = (i) => {

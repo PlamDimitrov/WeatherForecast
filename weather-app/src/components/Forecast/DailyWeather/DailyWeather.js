@@ -2,11 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 import { selectedCityWeather } from '../../../store/citySlice';
 
-import styles from './DaylyWeather.module.css';
+import styles from './DailyWeather.module.css';
 import RowForcast from '../../RowForcast/RowForcast';
 
 
-const DaylyWeather = ({ type = "week" }) => {
+const DailyWeather = ({ type = "week" }) => {
   const weather = useSelector(selectedCityWeather);
 
   const renderRows = () => {
@@ -52,4 +52,4 @@ const DaylyWeather = ({ type = "week" }) => {
   );
 }
 
-export default DaylyWeather;
+export default DailyWeather;
