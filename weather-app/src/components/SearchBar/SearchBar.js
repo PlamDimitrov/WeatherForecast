@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
-import styles from './SearchBar.module.css';
+import styles from './SearchBar.module.scss';
 import DropDown from './DropDown/DropDown';
 
 const SearchBar = () => {

@@ -6,7 +6,7 @@ import imgWindsock from '../../img/weather-icons/windsock.svg';
 import imgSunrise from '../../img/weather-icons/sunrise.svg';
 import imgSunset from '../../img/weather-icons/sunset.svg';
 
-import styles from './InfoIconSmall.module.css';
+import styles from './InfoIconSmall.module.scss';
 
 
 const InfoIconSmall = (

@@ -5,7 +5,7 @@ import { selectedCityWeather } from '../../../store/citySlice';
 
 import WeatherDecoder from '../../../helpers/weatherDecoder';
 
-import styles from './CurrentWeather.module.css';
+import styles from './CurrentWeather.module.scss';
 import InfoIconSmall from '../../InfoIconSmall/InfoIconSmall';
 import RowForcast from '../../RowForcast/RowForcast';
 

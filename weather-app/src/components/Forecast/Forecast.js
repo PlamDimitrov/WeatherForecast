@@ -4,7 +4,7 @@ import { selectedCityWeather, selectedCity, setNewWeather, setNewLocation } from
 import { useParams } from "react-router-dom";
 import api from "../../api";
 
-import styles from './Forecast.module.css';
+import styles from './Forecast.module.scss';
 
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';

@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import styles from './DropDown.module.css';
+import styles from './DropDown.module.scss';
 import Logo from '../../Logo/Logo';
 
 const DropDown = ({ visible, setVisible }) => {

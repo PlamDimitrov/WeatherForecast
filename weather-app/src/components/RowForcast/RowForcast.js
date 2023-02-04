@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import WeatherDecoder from '../../helpers/weatherDecoder';
 
-import styles from './RowForcast.module.css';
+import styles from './RowForcast.module.scss';
 
 import imgCompass from '../../img/weather-icons/compass.svg';
 

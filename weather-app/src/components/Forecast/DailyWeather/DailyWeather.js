@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 import { selectedCityWeather } from '../../../store/citySlice';
 
-import styles from './DailyWeather.module.css';
+import styles from './DailyWeather.module.scss';
 import RowForcast from '../../RowForcast/RowForcast';
 
 

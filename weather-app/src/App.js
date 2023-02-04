@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import { Routes, Route } from 'react-router-dom';
-import styles from './App.module.css';
+import styles from './App.module.scss';
 
 import Forecast from './components/Forecast/Forecast';
 
