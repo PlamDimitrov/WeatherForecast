@@ -28,12 +28,13 @@
   }
   .weather-and-temperature {
     display: flex;
+    width: 100%;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     img {
-      width: 60%;
+      max-width: 40%;
     }
     h1 {
       font-size: 2em;

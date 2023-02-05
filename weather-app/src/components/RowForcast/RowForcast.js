@@ -107,8 +107,8 @@ const RowForcast = ({
   return (
     <div>
       <motion.div
-        whileHover={{ scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 400, damping: 15 }}
+        whileHover={{ scale: 1.3, marginLeft: "12%", marginRight: "12%" }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className={styles["forecast-information"]}
         onClick={showAdditionalInfo}>
         <div className={styles["title"]}>

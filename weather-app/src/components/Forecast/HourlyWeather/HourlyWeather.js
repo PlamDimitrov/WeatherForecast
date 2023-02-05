@@ -6,6 +6,7 @@ import { selectedCityWeather } from '../../../store/citySlice';
 import styles from './HourlyWeather.module.scss';
 import RowForcast from '../../RowForcast/RowForcast';
 
+import Tabs from '@mui/material/Tabs';
 
 const HourlyWeather = () => {
   const weather = useSelector(selectedCityWeather);
@@ -52,11 +53,23 @@ const HourlyWeather = () => {
       <div className={styles["hourly-forecast"]}>
         <h1>Next 24 Hours</h1>
       </div>
-      {weather.hourly
-        ? <>
-          {renderRows()}
-        </>
-        : null}
+      <Tabs
+        variant="scrollable"
+        orientation='vertical'
+        scrollButtons="auto"
+        value={0}
+        sx={{
+          maxHeight: "60vh",
+          overflow: "visible"
+        }}
+        TabIndicatorProps={{
+          style: {
+            display: "none",
+          }
+        }}
+      >
+        {weather.hourly && renderRows()}
+      </Tabs>
     </>
   );
 }
