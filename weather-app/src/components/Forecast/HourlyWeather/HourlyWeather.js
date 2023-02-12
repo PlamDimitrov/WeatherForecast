@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectedCityWeather } from '../../../store/citySlice';
-
+import { useIsDesktop } from "../../Hooks/useMediaQuery";
 
 import styles from './HourlyWeather.module.scss';
 import RowForcast from '../../RowForcast/RowForcast';
@@ -10,6 +10,7 @@ import Tabs from '@mui/material/Tabs';
 
 const HourlyWeather = () => {
   const weather = useSelector(selectedCityWeather);
+  const isDesktop = useIsDesktop();
 
   const roundToNearestHour = (date) => {
     date.setMinutes(date.getMinutes() + 30);
@@ -55,13 +56,23 @@ const HourlyWeather = () => {
       </div>
       <Tabs
         variant="scrollable"
-        orientation='vertical'
+        orientation={isDesktop ? 'horizontal' : 'vertical'}
         scrollButtons="auto"
         value={0}
-        sx={{
-          maxHeight: "60vh",
-          overflow: "visible"
-        }}
+        sx={isDesktop
+          ? {
+            "& .MuiTabs-scroller": {
+              "& .MuiTabs-flexContainer": {
+                alignItems: "baseline",
+                margin: "1em",
+              }
+            }
+          }
+          : {
+            height: "60vh",
+            width: "100%"
+          }
+        }
         TabIndicatorProps={{
           style: {
             display: "none",

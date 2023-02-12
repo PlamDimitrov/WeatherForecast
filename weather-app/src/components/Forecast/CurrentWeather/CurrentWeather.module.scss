@@ -1,55 +1,88 @@
 @import "../../../Colors.scss";
+@import "../../../Screens.scss";
 
-.current-weather-container {
-  display: flex;
-  border-bottom: 1px dashed $gray;
-  flex-direction: column;
-  align-items: center;
-  h1,
-  h2,
-  h3 {
-    color: $light-blue;
-    white-space: nowrap;
-    margin: 0.2em;
-  }
-  h1 {
-    color: $light-blue;
-  }
-  h2 {
-    color: $yelow;
-  }
-  h3 {
-    color: $light-blue;
-    font-weight: lighter;
-    span {
-      vertical-align: top;
-      font-size: 0.7em;
-    }
-  }
-  .weather-and-temperature {
+.current-weather {
+  .current-weather-container {
     display: flex;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
+    border-bottom: 1px dashed $grey;
+    flex-direction: column;
     align-items: center;
-    img {
-      max-width: 40%;
+    h1,
+    h2,
+    h3 {
+      color: $light-blue;
+      white-space: nowrap;
+      margin: 0.2em;
     }
     h1 {
-      font-size: 2em;
+      color: $light-blue;
+    }
+    h2 {
+      color: $yelow;
+    }
+    h3 {
+      color: $light-blue;
+      font-weight: lighter;
+      span {
+        vertical-align: top;
+        font-size: 0.7em;
+      }
+    }
+    .weather-and-temperature {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      align-items: center;
+      img {
+        max-width: 40%;
+      }
+      h1 {
+        font-size: 2em;
+      }
+    }
+    .additional-information {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      width: 100%;
+      img {
+        margin: 0.3em;
+      }
     }
   }
-  .additional-information {
+  .three-day-forecast {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+}
+
+@media only screen and ($screen-seze-1) {
+  .current-weather {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-around;
-    width: 100%;
+    .current-weather-container {
+      width: 24.6%;
+      border: none;
+      border-right: 1px dashed $grey;
+      overflow: hidden;
+      margin: 1em 1em 1em 0;
+      h1 {
+        scale: 0.7;
+      }
+      h3 {
+        scale: 0.85;
+      }
+    }
+    .three-day-forecast {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      width: 75%;
+    }
   }
-}
-.three-day-forecast {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
 }

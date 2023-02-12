@@ -1,13 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { selectedCityWeather } from '../../../store/citySlice';
+import { useIsDesktop } from "../../Hooks/useMediaQuery";
 
 import styles from './DailyWeather.module.scss';
 import RowForcast from '../../RowForcast/RowForcast';
 
+import Tabs from '@mui/material/Tabs';
 
 const DailyWeather = ({ type = "week" }) => {
   const weather = useSelector(selectedCityWeather);
+  const isDesktop = useIsDesktop();
 
   const renderRows = () => {
     const rows = [];
@@ -44,9 +47,30 @@ const DailyWeather = ({ type = "week" }) => {
         <h1>{type === "week" ? "Next 6 Days" : "Weekend"}</h1>
       </div>
       {weather.hourly
-        ? <>
+        ? <Tabs
+          variant="scrollable"
+          orientation={isDesktop ? 'horizontal' : 'vertical'}
+          scrollButtons="auto"
+          value={0}
+          sx={isDesktop
+            ? {
+              "& .MuiTabs-scroller": {
+                "& .MuiTabs-flexContainer": {
+                  alignItems: "baseline",
+                  margin: "1em",
+                }
+              }
+            }
+            : {}
+          }
+          TabIndicatorProps={{
+            style: {
+              display: "none",
+            }
+          }}
+        >
           {renderRows()}
-        </>
+        </Tabs>
         : null}
     </>
   );

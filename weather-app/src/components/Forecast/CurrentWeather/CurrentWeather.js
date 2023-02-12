@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import { selectedCityWeather } from '../../../store/citySlice';
 
-
 import WeatherDecoder from '../../../helpers/weatherDecoder';
 
 import styles from './CurrentWeather.module.scss';
@@ -48,16 +47,15 @@ const CurrentWeather = ({ currentWeather, hourlyUnits }) => {
   }, [weather.daily])
 
   return (
-    <div>
+    <div className={styles["current-weather"]}>
       <div className={styles["current-weather-container"]}>
         <h1>The weather now</h1>
-        <div
-          className={styles["weather-and-temperature"]}>
+        <div className={styles["weather-and-temperature"]}>
           {weather.current_weather
             ? <img src={WeatherDecoder(weather.current_weather.weathercode, true).img}
               alt="current weather" />
             : emptyCurrentWeatherData()}
-          {hourlyUnits ? <h1><span>{currentWeather.temperature}</span>{hourlyUnits.temperature_2m}</h1> : emptyCurrentTemperatureData()}
+          {hourlyUnits ? <h1><span>{currentWeather.temperature}</span> {hourlyUnits.temperature_2m}</h1> : emptyCurrentTemperatureData()}
         </div>
         {weather.current_weather ? <h2>{WeatherDecoder(weather.current_weather.weathercode, true).description}</h2> : emptyCurrentWeatherData()}
         {weather.current_weather ? <h3>Apparent temperature {weather.hourly.apparent_temperature[getCurrentTimeIndex()]} <span>{weather.hourly_units.apparent_temperature}</span></h3> : emptyCurrentWeatherData()}

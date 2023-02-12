@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { motion } from "framer-motion";
+import { useIsDesktop } from "../Hooks/useMediaQuery";
 
 import styles from './RowForcast.module.scss';
 
@@ -26,6 +27,7 @@ const RowForcast = ({
   const [precipitationUnits, setPrecipitationUnits] = useState(null);
   const [radiation, setRadiation] = useState(null);
   const [radiationUnits, setRadiationUnits] = useState(null);
+  const isDesktop = useIsDesktop();
 
   const showOrHideRow = () => {
     switch (additionalInfoActive) {
@@ -105,9 +107,12 @@ const RowForcast = ({
     }
   }, [forecast])
   return (
-    <div>
+    <div className={styles["row-container"]}    >
       <motion.div
-        whileHover={{ scale: 1.3, marginLeft: "12%", marginRight: "12%" }}
+        whileHover={isDesktop
+          ? { scale: 1.2 }
+          : { scale: 1.3, marginLeft: "12%", marginRight: "12%" }
+        }
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className={styles["forecast-information"]}
         onClick={showAdditionalInfo}>
@@ -123,7 +128,7 @@ const RowForcast = ({
         </div>
       </motion.div >
       <div className={`${styles["info-detailed"]} ${showOrHideRow()}`} >
-        <Grid container spacing={0}>
+        <Grid sx={{ flexWrap: "nowrap" }} container spacing={0}>
           <Grid item>
             <h3>Wind direction:</h3>
             <h3>Wind speed:</h3>

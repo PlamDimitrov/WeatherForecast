@@ -1,8 +1,9 @@
 @import "../../../Colors.scss";
+@import "../../../Screens.scss";
 
 .hourly-forecast {
   display: flex;
-  border-bottom: 1px dashed $gray;
+  border-bottom: 1px dashed $grey;
   flex-direction: column;
   align-items: center;
   h1,
@@ -11,5 +12,10 @@
     color: $light-blue;
     white-space: nowrap;
     margin: 0.2em;
+  }
+}
+
+@media only screen and ($screen-seze-1) {
+  .hourly-forecast {
   }
 }

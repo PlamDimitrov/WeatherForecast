@@ -1,9 +1,11 @@
 @import "../../Colors.scss";
+@import "../../Screens.scss";
 
 .forecast-main-container {
-  width: clamp(40%, 500px, 90%);
+  width: clamp(40%, 900px, 90%);
   overflow: hidden;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   .city-name {
     padding: 2vh;
     text-align: right;
@@ -34,7 +36,29 @@
     .forecast-container {
       background-color: $white;
       padding: 1.5em;
-      // min-height: 580px;
+    }
+  }
+}
+
+@media only screen and ($screen-seze-1) {
+  .forecast-main-container {
+    .city-name {
+      h1,
+      h3 {
+      }
+    }
+    .forecast-body {
+      .forecast-period-option {
+        .MuiTabs-indicator {
+        }
+        .tab {
+        }
+        .active-tab {
+        }
+      }
+      .forecast-container {
+        padding: 0 0 0 0.5em;
+      }
     }
   }
 }

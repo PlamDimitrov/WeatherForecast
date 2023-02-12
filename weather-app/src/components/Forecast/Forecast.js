@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { motion, AnimatePresence } from "framer-motion";
 import { selectedCityWeather, selectedCity, setNewWeather, setNewLocation } from '../../store/citySlice';
 import { useParams } from "react-router-dom";
+import { useIsDesktop } from "../Hooks/useMediaQuery";
 import api from "../../api";
 
 import styles from './Forecast.module.scss';
@@ -22,6 +23,7 @@ const Forecast = () => {
   const weather = useSelector(selectedCityWeather);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = React.useState("now");
+  const isDesktop = useIsDesktop();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -70,27 +72,53 @@ const Forecast = () => {
     dispatch(setNewWeather(weather.data));
   }
 
-  const dropIn = {
-    hidden: {
-      height: 0,
-      opacity: 0,
-    },
-    visible: {
-      height: "auto",
-      opacity: 1,
-      transition: {
-        type: "linear",
-        duration: 1,
+  const dropIn = () => {
+
+    const desctopAnimations = {
+      hidden: {
+        width: 0,
+        opacity: 0,
+      },
+      visible: {
+        height: "auto",
+        opacity: 1,
+        transition: {
+          type: "linear",
+          duration: 1,
+        }
+      },
+      exit: {
+        height: 0,
+        opacity: 0,
+        transition: {
+          type: "tween",
+          duration: 0.5,
+        }
       }
-    },
-    exit: {
-      height: 0,
-      opacity: 0,
-      transition: {
-        type: "tween",
-        duration: 0.5,
+    }
+    const mobileAnimations = {
+      hidden: {
+        height: 0,
+        opacity: 0,
+      },
+      visible: {
+        height: "auto",
+        opacity: 1,
+        transition: {
+          type: "linear",
+          duration: 1,
+        }
+      },
+      exit: {
+        height: 0,
+        opacity: 0,
+        transition: {
+          type: "tween",
+          duration: 0.5,
+        }
       }
-    },
+    }
+    return isDesktop ? desctopAnimations : mobileAnimations
   }
 
   useEffect(() => {
@@ -125,11 +153,14 @@ const Forecast = () => {
                 height: "2px",
               }
             }}
+            classes={
+              styles["active-tab"]
+            }
           >
             <Tab sx={{ borderBottom: 1 }} className={`${styles["tab"]}`} value="now" label="Now" />
-            <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="24-hours" label="24 h" />
-            <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="6-days" label="6 Days" />
-            <Tab sx={{ borderLeft: 1, borderBottom: 1 }} style={{ minWidth: 50 }} className={`${styles["tab"]}`} value="weekend" label="Weekend" />
+            <Tab sx={{ borderLeft: 1, borderBottom: 1, minWidth: 50 }} className={`${styles["tab"]}`} value="24-hours" label="24 h" />
+            <Tab sx={{ borderLeft: 1, borderBottom: 1, minWidth: 50 }} className={`${styles["tab"]}`} value="6-days" label="6 Days" />
+            <Tab sx={{ borderLeft: 1, borderBottom: 1, minWidth: 50 }} className={`${styles["tab"]}`} value="weekend" label="Weekend" />
           </Tabs>
         </Box>
         <div className={`${styles["forecast-container"]}`}>
@@ -139,7 +170,7 @@ const Forecast = () => {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                variants={dropIn}
+                variants={dropIn()}
               >
                 <CurrentWeather {...{
                   currentWeather: weather.current_weather,
@@ -154,7 +185,7 @@ const Forecast = () => {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                variants={dropIn}
+                variants={dropIn()}
               >
                 <HourlyWeather />
               </motion.div>
@@ -166,7 +197,7 @@ const Forecast = () => {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                variants={dropIn}
+                variants={dropIn()}
               >
                 <DailyWeather {...{ type: "week" }} />
               </motion.div>
@@ -178,7 +209,7 @@ const Forecast = () => {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                variants={dropIn}
+                variants={dropIn()}
               >
                 <DailyWeather {...{ type: "weekend" }} />
               </motion.div>

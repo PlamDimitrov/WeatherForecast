@@ -1,8 +1,9 @@
 @import "../../Colors.scss";
+@import "../../Screens.scss";
 
 .forecast-information {
   height: 3em;
-  border-bottom: 1px dashed $gray;
+  border-bottom: 1px dashed $grey;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
@@ -94,5 +95,51 @@
   }
   to {
     max-height: 170px;
+  }
+}
+
+@media only screen and ($screen-seze-1) {
+  .row-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    width: 33%;
+    overflow: visible;
+    margin: 0 0.5em 0 0;
+    .forecast-information {
+      height: 50%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: center;
+      border: 1px dashed $grey;
+      margin: 1em;
+      padding: 0.5em;
+      h1 {
+      }
+      .title {
+        .main {
+        }
+        .secondary {
+          font-size: 0.6em;
+        }
+      }
+      .info-container {
+        width: 100%;
+        img {
+        }
+        .min {
+        }
+        .max {
+        }
+      }
+    }
+  }
+  .info-detailed {
+    flex-direction: row;
+    border-left: 1px dashed $grey;
+    border-right: 1px dashed $grey;
+    margin: 0.5em 0 0.5em 0;
   }
 }
